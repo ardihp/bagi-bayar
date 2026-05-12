@@ -2,7 +2,7 @@ import LandingView from "@/modules/landing/view";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Expense Splitter | Waktunya bagi-bagi pengeluaran bareng temen  kamu",
+  title: "Expenses Splitter | Waktunya bagi-bagi pengeluaran bareng temen kamu",
   description: "",
 };
 

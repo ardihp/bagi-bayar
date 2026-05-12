@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Figtree } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   display: "swap",
@@ -47,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${plusJakartaSans.variable} h-full antialiased`}
+      className={cn("h-full", "antialiased", plusJakartaSans.variable, "font-sans", figtree.variable)}
     >
       <head>
         <meta name="mobile-web-app-capable" content="yes" />

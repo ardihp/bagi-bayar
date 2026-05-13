@@ -1,11 +1,13 @@
+import { SectionMark } from "@/modules/landing/view";
 import { SplitIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 
 export default function FooterLanding() {
   return (
-    <footer className="border-t border-secondary/15 border-dashed">
-      <div className="flex justify-between items-center max-w-5xl xl:max-w-7xl 2xl:max-w-screen-2xl mx-auto w-full border-x border-secondary/15 border-dashed py-6 px-12">
+    <footer className="grid grid-cols-[1fr_minmax(0,1536px)_1fr] border-t-2 border-secondary/10 border-dashed">
+      <SectionMark section="Footer" />
+      <div className="container flex justify-between items-center border-x-2 border-secondary/10 border-dashed pt-8 pb-10 px-12">
         <div className="w-50">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative top-0 p-1.5 rounded-lg bg-linear-to-bl from-primary to-secondary shadow-[0_5px_0] shadow-secondary/30 group-active:top-1.25 group-active:shadow-none duration-200">
@@ -24,6 +26,7 @@ export default function FooterLanding() {
           the modern traveler.
         </p>
       </div>
+      <div className="min-w-20" />
     </footer>
   );
 }

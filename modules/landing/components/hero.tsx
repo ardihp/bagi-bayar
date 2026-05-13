@@ -13,7 +13,7 @@ export default function HeroSection() {
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center gap-10 py-30 border-b border-secondary/15 border-dashed">
+    <div className="container relative flex flex-col items-center justify-center gap-10 py-30">
       <div className="absolute top-30 size-100 rounded-full bg-secondary/2 blur-lg shadow-[0_0_25px] shadow-secondary/3" />
 
       <div className="flex items-center gap-2 py-1 px-2.5 rounded-full border border-secondary/30 bg-secondary/10">

@@ -1,15 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Figtree } from "next/font/google";
+import { Figtree, Pixelify_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  display: "swap",
-  weight: ["200", "300", "400", "500", "600", "700", "800"],
-  preload: true,
-  variable: "--font-plus-jakarta",
+const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
+const pixel = Pixelify_Sans({
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-pixel",
 });
 
 export const viewport: Viewport = {
@@ -50,7 +47,13 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={cn("h-full", "antialiased", plusJakartaSans.variable, "font-sans", figtree.variable)}
+      className={cn(
+        "h-full",
+        "antialiased",
+        "font-sans",
+        figtree.variable,
+        pixel.variable,
+      )}
     >
       <head>
         <meta name="mobile-web-app-capable" content="yes" />

@@ -1,8 +1,6 @@
-import React from "react";
-
 export default function FeaturesSection() {
   return (
-    <div id="features" className="flex flex-col px-12 py-8 gap-8">
+    <div id="features" className="container flex flex-col px-12 py-8 gap-8">
       <div className="flex flex-col gap-3">
         <h2 className="text-2xl font-bold">Features</h2>
         <p className="text-sm font-thin opacity-60 max-w-md">

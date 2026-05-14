@@ -112,6 +112,7 @@
 @theme {
   --color-primary: #adc6ff;
   --color-secondary: #89a7ff;
+  --color-card-secondary: #161a26;
   --font-pixel: var(--font-pixel);
 }
 
@@ -124,7 +125,7 @@ body {
 }
 
 .feature-card {
-  @apply relative flex flex-col justify-end top-0 bg-secondary/5 p-6 rounded-xl shadow-[0_5px_0] shadow-secondary/15 group-hover:hover:opacity-100 group-hover:hover:-top-1.25 group-hover:hover:shadow-[0_10px_0] group-hover:not-hover:opacity-40 duration-100;
+  @apply relative flex flex-col top-0 bg-secondary/5 rounded-xl shadow-[0_10px_0] shadow-secondary/3 group-hover:hover:opacity-100 group-hover:hover:-top-1.25 group-hover:hover:shadow-[0_15px_0] group-hover:not-hover:opacity-40 duration-100;
 }
 
 .container {

@@ -9,26 +9,36 @@ export default function FeaturesSection() {
         </p>
       </div>
 
-      <div className="grid grid-cols-3 gap-4 group">
+      <div className="grid grid-cols-3 gap-5 group">
         <div className="feature-card col-span-2">
-          <h3 className="text-lg font-semibold">Feature 1</h3>
-          <p className="text-sm font-thin opacity-60">
-            Description of feature 1.
-          </p>
+          <div className="flex flex-col justify-end items-start gap-1">
+            <h3 className="text-xl font-semibold">Smart Planning</h3>
+            <p className="text-sm font-thin opacity-60 max-w-xl">
+              Easily organize your destinations and itineraries in one elegant,
+              integrated view.
+            </p>
+          </div>
         </div>
 
         <div className="feature-card">
-          <h3 className="text-lg font-semibold">Feature 2</h3>
-          <p className="text-sm font-thin opacity-60">
-            Description of feature 2.
-          </p>
+          <div className="flex flex-col justify-end items-start gap-1">
+            <h3 className="text-xl font-semibold">Automatic Cost Sharing</h3>
+            <p className="text-sm font-thin opacity-60 max-w-xl">
+              An intelligent system that precisely calculates and divides group
+              expenses without disputes.
+            </p>
+          </div>
         </div>
 
         <div className="feature-card col-span-3">
-          <h3 className="text-lg font-semibold">Feature 3</h3>
-          <p className="text-sm font-thin opacity-60">
-            Description of feature 3.
-          </p>
+          <div className="flex flex-col gap-1">
+            <h3 className="text-xl font-semibold">Real-time Report</h3>
+            <p className="text-sm font-thin opacity-60 max-w-xl">
+              Financial visibility elevated to an art form. Watch your global
+              spend consolidate instantly in perfectly proportioned,
+              asymmetrical dashboards devoid of unnecessary charts.
+            </p>
+          </div>
         </div>
       </div>
     </div>

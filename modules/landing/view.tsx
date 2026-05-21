@@ -1,5 +1,7 @@
+import AboutSection from "./components/about";
 import FeaturesSection from "./components/features";
 import HeroSection from "./components/hero";
+import WorksSection from "./components/works";
 
 export function SectionMark({ section }: { section: string }) {
   return (
@@ -15,9 +17,24 @@ export default function LandingView() {
       <SectionMark section="Hero" />
       <HeroSection />
       <div className="min-w-20" />
+
+      {/* Features */}
       <hr className="border-t-2 border-dashed border-secondary/10 col-span-3" />
-      <SectionMark section="Feature" />
+      <SectionMark section="Section.1" />
       <FeaturesSection />
+      <div className="min-w-20" />
+
+      {/* How It Works */}
+      <hr className="border-t-2 border-dashed border-secondary/10 col-span-3" />
+      <SectionMark section="Section.2" />
+      <WorksSection />
+      <div className="min-w-20" />
+
+      {/* About */}
+      <hr className="border-t-2 border-dashed border-secondary/10 col-span-3" />
+      <SectionMark section="Section.3" />
+      <AboutSection />
+      <div className="min-w-20" />
       <div />
     </div>
   );

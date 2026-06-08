@@ -10,7 +10,10 @@ const costSharing: { user: string; spend: number }[] = [
 
 export default function FeaturesSection() {
   return (
-    <div id="features" className="scroll-mt-[72px] container flex flex-col px-4 md:px-8 lg:px-12 py-8 md:py-12 gap-8 md:gap-16">
+    <div
+      id="features"
+      className="scroll-mt-18 md:scroll-mt-0 container flex flex-col px-4 md:px-8 lg:px-12 py-8 md:py-12 gap-8 md:gap-16"
+    >
       <div className="flex flex-col items-center gap-2">
         <h2 className="text-xl md:text-2xl font-bold">Features</h2>
         <p className="font-thin opacity-60 text-center text-sm md:text-base">
@@ -64,7 +67,7 @@ export default function FeaturesSection() {
                   key={item.user}
                   className={cn(
                     "flex items-center justify-between p-2 rounded-xl border border-secondary/10 bg-secondary/5 backdrop-blur-2xl",
-                    index % 2 === 0 ? "-rotate-1" : "rotate-1",
+                    index % 2 === 0 ? "-rotate-1" : "rotate-1"
                   )}
                 >
                   <div className="flex items-center gap-3">
@@ -74,7 +77,9 @@ export default function FeaturesSection() {
                         {item.user.substring(0, 1)}
                       </AvatarFallback>
                     </Avatar>
-                    <p className="leading-none text-xs md:text-sm">{item.user}</p>
+                    <p className="leading-none text-xs md:text-sm">
+                      {item.user}
+                    </p>
                   </div>
                   <p className="leading-none text-xs md:text-sm">
                     Rp {Number(item.spend).toLocaleString("ID-id")}
@@ -89,7 +94,9 @@ export default function FeaturesSection() {
 
         <div className="feature-card gap-4 col-span-1 md:col-span-2 lg:col-span-3">
           <div className="flex flex-col gap-1 px-4 md:px-6 pt-4 md:pt-6">
-            <h3 className="text-lg md:text-xl font-semibold">Real-time Report</h3>
+            <h3 className="text-lg md:text-xl font-semibold">
+              Real-time Report
+            </h3>
             <p className="text-xs md:text-sm font-thin opacity-60 max-w-xl">
               Financial visibility elevated to an art form. Watch your global
               spend consolidate instantly in perfectly proportioned,

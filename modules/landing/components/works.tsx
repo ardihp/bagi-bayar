@@ -30,7 +30,7 @@ export default function WorksSection() {
   return (
     <div
       id="how-it-works"
-      className="scroll-mt-[72px] container flex flex-col px-4 md:px-8 lg:px-12 py-8 md:py-12 gap-8 md:gap-16"
+      className="scroll-mt-18 md:scroll-mt-0 container flex flex-col px-4 md:px-8 lg:px-12 py-8 md:py-12 gap-8 md:gap-16"
     >
       <div className="flex flex-col items-center gap-2">
         <h2 className="text-xl md:text-2xl font-bold">How It Works</h2>
@@ -42,18 +42,23 @@ export default function WorksSection() {
 
       <div className="flex flex-col md:grid md:grid-cols-2 lg:flex lg:flex-row items-stretch lg:items-center gap-4 lg:gap-2 group">
         {workItems.map((item, key) => (
-          <div key={key} className="flex flex-col lg:flex-row items-center relative group/card">
+          <div
+            key={key}
+            className="flex flex-col lg:flex-row items-center relative group/card"
+          >
             <div
               className={cn(
                 "feature-card p-4 md:p-6 gap-1 h-fit rounded-xl overflow-hidden w-full",
-                key >= 1 && "lg:pl-8",
+                key >= 1 && "lg:pl-8"
               )}
             >
               <p className="text-lg md:text-xl font-semibold text-secondary opacity-20 group-hover/card:opacity-40 italic mb-2 md:mb-3 duration-200">
                 0{key + 1}
               </p>
               <p className="text-lg md:text-xl font-semibold">{item.name}</p>
-              <p className="text-xs md:text-sm font-thin opacity-60">{item.description}</p>
+              <p className="text-xs md:text-sm font-thin opacity-60">
+                {item.description}
+              </p>
 
               <div className="bg-linear-to-r from-secondary to-transparent to-30% group-hover/card:hover:to-100% w-full h-full absolute opacity-5 group-hover/card:opacity-10 top-0 left-0 duration-500" />
             </div>

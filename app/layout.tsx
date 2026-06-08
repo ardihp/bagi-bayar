@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
 const pixel = Pixelify_Sans({
+  subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-pixel",
 });

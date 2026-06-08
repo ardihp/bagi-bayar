@@ -39,6 +39,9 @@ export const STORAGE_KEYS = {
   PARTICIPANTS: 'travel_app_participants',
   EXPENSES: 'travel_app_expenses',
   SETTINGS: 'travel_app_settings',
+  PENDING_CHANGES: 'travel_app_pending_changes',
+  SYNC_STATUS: 'travel_app_sync_status',
+  LAST_SYNC: 'travel_app_last_sync',
 } as const;
 
 /**

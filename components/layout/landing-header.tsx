@@ -35,7 +35,7 @@ export default function HeaderLanding() {
     <nav className="sticky top-0 z-40 bg-background/80  md:bg-background md:relative md:z-auto grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1536px)_1fr] border-b-2 border-dashed border-secondary/10">
       <SectionMark section="Header" />
       <div className="container flex items-center border-x-2 border-secondary/10 backdrop-blur-md md:backdrop-blur-none border-dashed py-4 md:py-6 px-4 md:px-8 lg:px-12">
-        <div className="w-auto md:w-50 pb-2">
+        <div className="w-auto md:w-60 pb-2">
           <Link
             href="/"
             className="flex items-center gap-2 md:gap-3 group"
@@ -66,7 +66,13 @@ export default function HeaderLanding() {
         </div>
 
         {/* Desktop sign in */}
-        <div className="hidden md:flex justify-end w-50 pb-2">
+        <div className="hidden md:flex items-center justify-between w-60 pb-2">
+          <button className="btn-primary from-transparent! to-transparent! bg-secondary/10 shadow-secondary/5!">
+            <p className="opacity-70 text-sm font-semibold">Start as Guest</p>
+          </button>
+
+          <p className="text-sm opacity-70">|</p>
+
           <button className="btn-primary">
             <p className="text-background text-sm font-bold">Sign In</p>
           </button>
@@ -101,9 +107,16 @@ export default function HeaderLanding() {
                 {item.name}
               </div>
             ))}
-            <button className="btn-primary w-full mt-2">
-              <p className="text-background text-sm font-bold">Sign In</p>
-            </button>
+            <div className="flex gap-4 mt-2">
+              <button className="btn-primary from-transparent! to-transparent! bg-card-secondary shadow-secondary/5! w-full">
+                <p className="opacity-70 text-sm font-semibold">
+                  Start as Guest
+                </p>
+              </button>
+              <button className="btn-primary w-full">
+                <p className="text-background text-sm font-bold">Sign In</p>
+              </button>
+            </div>
           </div>
         </div>
       )}

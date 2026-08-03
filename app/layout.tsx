@@ -58,7 +58,7 @@ export default function RootLayout({
     >
       <head>
         <meta name="mobile-web-app-capable" content="yes" />
-        <link rel="icon" type="image/png" href="/icons/icon-192.png" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         {children}

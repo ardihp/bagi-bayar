@@ -12,7 +12,7 @@ export default function FeaturesSection() {
   return (
     <div
       id="features"
-      className="scroll-mt-18 md:scroll-mt-0 container flex flex-col px-4 md:px-8 lg:px-12 py-8 md:py-12 gap-8 md:gap-16"
+      className="scroll-mt-18 md:scroll-mt-23 lg:scroll-mt-0 container flex flex-col px-4 md:px-8 lg:px-12 py-8 md:py-12 gap-8 md:gap-16"
     >
       <div className="flex flex-col items-center gap-2">
         <h2 className="text-xl md:text-2xl font-bold">Features</h2>
@@ -67,7 +67,7 @@ export default function FeaturesSection() {
                   key={item.user}
                   className={cn(
                     "flex items-center justify-between p-2 rounded-xl border border-secondary/10 bg-secondary/5 backdrop-blur-2xl",
-                    index % 2 === 0 ? "-rotate-1" : "rotate-1"
+                    index % 2 === 0 ? "-rotate-1" : "rotate-1",
                   )}
                 >
                   <div className="flex items-center gap-3">

@@ -30,7 +30,7 @@ export default function WorksSection() {
   return (
     <div
       id="how-it-works"
-      className="scroll-mt-18 md:scroll-mt-0 container flex flex-col px-4 md:px-8 lg:px-12 py-8 md:py-12 gap-8 md:gap-16"
+      className="scroll-mt-18 md:scroll-mt-23 lg:scroll-mt-0 container flex flex-col px-4 md:px-8 lg:px-12 py-8 md:py-12 gap-8 md:gap-16"
     >
       <div className="flex flex-col items-center gap-2">
         <h2 className="text-xl md:text-2xl font-bold">How It Works</h2>
@@ -49,7 +49,7 @@ export default function WorksSection() {
             <div
               className={cn(
                 "feature-card p-4 md:p-6 gap-1 h-fit rounded-xl overflow-hidden w-full",
-                key >= 1 && "lg:pl-8"
+                key >= 1 && "lg:pl-8",
               )}
             >
               <p className="text-lg md:text-xl font-semibold text-secondary opacity-20 group-hover/card:opacity-40 italic mb-2 md:mb-3 duration-200">

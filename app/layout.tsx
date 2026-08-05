@@ -18,7 +18,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Expense Splitter - Travel Expense Splitter",
+  title: "Expenses Splitter - Travel Expense Splitter",
   description: "Aplikasi pencatat destinasi perjalanan dan pembagi pengeluaran",
   applicationName: "Expense Splitter",
   appleWebApp: {

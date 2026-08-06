@@ -6,27 +6,50 @@ import * as yup from "yup";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowRight } from "@hugeicons/core-free-icons";
+import {
+  ArrowRight,
+  EyeIcon,
+  EyeOff,
+  Loading03Icon,
+} from "@hugeicons/core-free-icons";
+import { useAuth } from "@/hooks/use-auth";
+import { toast } from "@/components/ui/toast";
+import { useState } from "react";
 
 const schema = yup.object().shape({
   email: yup.string().email().required("email is required"),
-  password: yup.string().required("password is required"),
+  password: yup.string().min(8).required("password is required"),
 });
 
 export default function SignUpView() {
+  const [showPassword, setShowPassword] = useState(false);
+  const { signUpWithEmail } = useAuth();
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    setValue,
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {},
   });
 
-  console.log(errors);
+  const onSubmit = async (params: yup.InferType<typeof schema>) => {
+    try {
+      const { data, error } = await signUpWithEmail(params);
 
-  const onSubmit = (data: yup.InferType<typeof schema>) => {
-    console.log(data);
+      if (error) {
+        throw new Error(error?.message);
+      }
+
+      console.log(data);
+    } catch (error: any) {
+      toast.add({
+        title: "Failed to sign up",
+        description: error?.message as string,
+      });
+      setValue("password", "");
+    }
   };
 
   return (
@@ -55,14 +78,25 @@ export default function SignUpView() {
         <label htmlFor="password" className="font-semibold">
           Password
         </label>
-        <Input
-          id="password"
-          type="password"
-          placeholder="Input password"
-          aria-invalid={errors?.password ? "true" : "false"}
-          className="h-12 rounded-lg"
-          {...register("password")}
-        />
+        <div className="relative">
+          <Input
+            id="password"
+            type={showPassword ? "text" : "password"}
+            placeholder="Input password"
+            aria-invalid={errors?.password ? "true" : "false"}
+            className="h-12 rounded-lg"
+            {...register("password")}
+          />
+
+          <div className="absolute flex items-center justify-center top-0 right-0 h-12 px-4 cursor-pointer">
+            <HugeiconsIcon
+              icon={showPassword ? EyeIcon : EyeOff}
+              className="size-5"
+              strokeWidth={2}
+              onClick={() => setShowPassword(!showPassword)}
+            />
+          </div>
+        </div>
 
         {errors?.password && (
           <small className="text-red-300 capitalize">
@@ -75,12 +109,22 @@ export default function SignUpView() {
         type="submit"
         className="btn-primary flex items-center justify-center gap-2 w-full my-2 h-12"
       >
-        <p className="text-background font-bold">Sign Up</p>
-        <HugeiconsIcon
-          icon={ArrowRight}
-          className="text-background size-5"
-          strokeWidth={3}
-        />
+        {isSubmitting ? (
+          <HugeiconsIcon
+            icon={Loading03Icon}
+            className="text-background size-5 animate-spin"
+            strokeWidth={3}
+          />
+        ) : (
+          <>
+            <p className="text-background font-bold">Sign Up</p>
+            <HugeiconsIcon
+              icon={ArrowRight}
+              className="text-background size-5"
+              strokeWidth={3}
+            />
+          </>
+        )}
       </button>
 
       <div className="flex items-center justify-center gap-1 text-sm">

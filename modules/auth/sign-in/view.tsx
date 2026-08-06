@@ -6,7 +6,9 @@ import * as yup from "yup";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowRight } from "@hugeicons/core-free-icons";
+import { ArrowRight, Loading03Icon } from "@hugeicons/core-free-icons";
+import { useAuth } from "@/hooks/use-auth";
+import { toast } from "@/components/ui/toast";
 
 const schema = yup.object().shape({
   email: yup.string().email().required("email is required"),
@@ -14,19 +16,34 @@ const schema = yup.object().shape({
 });
 
 export default function SignInView() {
+  const { signInWithEmail } = useAuth();
+
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    setValue,
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {},
   });
 
-  console.log(errors);
+  const onSubmit = async (params: yup.InferType<typeof schema>) => {
+    try {
+      const { data, error } = await signInWithEmail(params);
 
-  const onSubmit = (data: yup.InferType<typeof schema>) => {
-    console.log(data);
+      if (error) {
+        throw new Error(error?.message);
+      }
+
+      console.log(data);
+    } catch (error: any) {
+      toast.add({
+        title: "Failed to authenticate",
+        description: error?.message as string,
+      });
+      setValue("password", "");
+    }
   };
 
   return (
@@ -74,13 +91,24 @@ export default function SignInView() {
       <button
         type="submit"
         className="btn-primary flex items-center justify-center gap-2 w-full my-2 h-12"
+        disabled={isSubmitting}
       >
-        <p className="text-background font-bold">Sign In</p>
-        <HugeiconsIcon
-          icon={ArrowRight}
-          className="text-background size-5"
-          strokeWidth={3}
-        />
+        {isSubmitting ? (
+          <HugeiconsIcon
+            icon={Loading03Icon}
+            className="text-background size-5 animate-spin"
+            strokeWidth={3}
+          />
+        ) : (
+          <>
+            <p className="text-background font-bold">Sign In</p>
+            <HugeiconsIcon
+              icon={ArrowRight}
+              className="text-background size-5"
+              strokeWidth={3}
+            />
+          </>
+        )}
       </button>
 
       <div className="flex items-center justify-center gap-1 text-sm">

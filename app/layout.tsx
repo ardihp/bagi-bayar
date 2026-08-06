@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Figtree, Pixelify_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toast";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
 const pixel = Pixelify_Sans({
@@ -62,6 +63,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         {children}
+        <Toaster timeout={3000} limit={3} />
       </body>
     </html>
   );

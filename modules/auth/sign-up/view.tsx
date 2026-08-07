@@ -8,13 +8,17 @@ import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   ArrowRight,
+  ArrowRight02Icon,
+  At,
   EyeIcon,
   EyeOff,
   Loading03Icon,
+  LockKeyhole,
 } from "@hugeicons/core-free-icons";
-import { useAuth } from "@/hooks/use-auth";
 import { toast } from "@/components/ui/toast";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signUpWithEmail } from "@/hooks/use-auth";
 
 const schema = yup.object().shape({
   email: yup.string().email().required("email is required"),
@@ -23,7 +27,8 @@ const schema = yup.object().shape({
 
 export default function SignUpView() {
   const [showPassword, setShowPassword] = useState(false);
-  const { signUpWithEmail } = useAuth();
+  const router = useRouter();
+
   const {
     handleSubmit,
     register,
@@ -36,13 +41,14 @@ export default function SignUpView() {
 
   const onSubmit = async (params: yup.InferType<typeof schema>) => {
     try {
-      const { data, error } = await signUpWithEmail(params);
+      const response = await signUpWithEmail(params);
 
-      if (error) {
-        throw new Error(error?.message);
+      if (!response.success) {
+        throw new Error(response?.message);
       }
 
-      console.log(data);
+      router.push("/app/dashboard");
+      router.refresh();
     } catch (error: any) {
       toast.add({
         title: "Failed to sign up",
@@ -64,6 +70,7 @@ export default function SignUpView() {
           placeholder="Input email"
           aria-invalid={errors?.email ? "true" : "false"}
           className="h-12 rounded-lg"
+          leftIcon={At}
           {...register("email")}
         />
 
@@ -84,18 +91,12 @@ export default function SignUpView() {
             type={showPassword ? "text" : "password"}
             placeholder="Input password"
             aria-invalid={errors?.password ? "true" : "false"}
-            className="h-12 rounded-lg"
+            className="h-12 rounded-lg px-13"
+            leftIcon={LockKeyhole}
+            rightIcon={showPassword ? EyeIcon : EyeOff}
+            onRightIconClick={() => setShowPassword(!showPassword)}
             {...register("password")}
           />
-
-          <div className="absolute flex items-center justify-center top-0 right-0 h-12 px-4 cursor-pointer">
-            <HugeiconsIcon
-              icon={showPassword ? EyeIcon : EyeOff}
-              className="size-5"
-              strokeWidth={2}
-              onClick={() => setShowPassword(!showPassword)}
-            />
-          </div>
         </div>
 
         {errors?.password && (
@@ -117,15 +118,26 @@ export default function SignUpView() {
           />
         ) : (
           <>
-            <p className="text-background font-bold">Sign Up</p>
+            <p className="text-background font-bold">Create Account</p>
             <HugeiconsIcon
-              icon={ArrowRight}
+              icon={ArrowRight02Icon}
               className="text-background size-5"
-              strokeWidth={3}
+              strokeWidth={2.5}
             />
           </>
         )}
       </button>
+
+      <hr className="border-dashed border-secondary/30" />
+
+      <div className="btn-primary from-white! to-white! flex items-center justify-center gap-3 w-full my-2 h-12">
+        <img
+          src="/images/google.webp"
+          alt="Google Icon"
+          className="size-5 object-cover"
+        />
+        <p className="text-background font-bold">Sign up with Google</p>
+      </div>
 
       <div className="flex items-center justify-center gap-1 text-sm">
         <p>{`Already an explorer?`}</p>

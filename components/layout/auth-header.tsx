@@ -9,24 +9,24 @@ export default function HeaderAuth() {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col items-center justify-center gap-8 pb-1.25">
+    <div className="flex flex-col items-center justify-center gap-6 pb-1.25">
       <Link href="/" title="Back to home" passHref>
         <div className="relative top-0 p-1.5 rounded-xl bg-linear-to-bl from-primary to-secondary shadow-[0_5px_0] shadow-secondary/30 active:top-1.25 active:shadow-none duration-200">
           <HugeiconsIcon
             icon={SplitIcon}
             strokeWidth={2}
-            className="size-8 md:size-10 text-background rotate-90"
+            className="size-8 md:size-9 text-background rotate-90"
           />
         </div>
       </Link>
       <div className="flex flex-col items-center gap-2">
-        <p className="font-semibold text-4xl text-center">
+        <p className="font-semibold text-3xl text-center">
           {pathname?.includes("sign-in")
             ? "Welcome back, explorer!"
             : "Ready for your next adventure?"}
         </p>
 
-        <p className="text-md opacity-70 text-center">
+        <p className="text-base opacity-70 text-center">
           {pathname?.includes("sign-in")
             ? "Log in to track your trips and stay on budget."
             : "Create an account and effortlessly track your travel expenses."}

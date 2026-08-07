@@ -6,9 +6,18 @@ import * as yup from "yup";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowRight, Loading03Icon } from "@hugeicons/core-free-icons";
-import { useAuth } from "@/hooks/use-auth";
+import {
+  ArrowRight02Icon,
+  At,
+  EyeIcon,
+  EyeOff,
+  Loading03Icon,
+  LockKeyhole,
+} from "@hugeicons/core-free-icons";
 import { toast } from "@/components/ui/toast";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signInWithEmail } from "@/hooks/use-auth";
 
 const schema = yup.object().shape({
   email: yup.string().email().required("email is required"),
@@ -16,7 +25,8 @@ const schema = yup.object().shape({
 });
 
 export default function SignInView() {
-  const { signInWithEmail } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const {
     handleSubmit,
@@ -30,13 +40,14 @@ export default function SignInView() {
 
   const onSubmit = async (params: yup.InferType<typeof schema>) => {
     try {
-      const { data, error } = await signInWithEmail(params);
+      const response = await signInWithEmail(params);
 
-      if (error) {
-        throw new Error(error?.message);
+      if (!response.success) {
+        throw new Error(response?.message);
       }
 
-      console.log(data);
+      router.push("/app/dashboard");
+      router.refresh();
     } catch (error: any) {
       toast.add({
         title: "Failed to authenticate",
@@ -58,6 +69,7 @@ export default function SignInView() {
           placeholder="Input email"
           aria-invalid={errors?.email ? "true" : "false"}
           className="h-12 rounded-lg"
+          leftIcon={At}
           {...register("email")}
         />
 
@@ -74,10 +86,13 @@ export default function SignInView() {
         </label>
         <Input
           id="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="Input password"
           aria-invalid={errors?.password ? "true" : "false"}
-          className="h-12 rounded-lg"
+          className="h-12 rounded-lg px-13"
+          leftIcon={LockKeyhole}
+          rightIcon={showPassword ? EyeIcon : EyeOff}
+          onRightIconClick={() => setShowPassword(!showPassword)}
           {...register("password")}
         />
 
@@ -103,13 +118,24 @@ export default function SignInView() {
           <>
             <p className="text-background font-bold">Sign In</p>
             <HugeiconsIcon
-              icon={ArrowRight}
+              icon={ArrowRight02Icon}
               className="text-background size-5"
-              strokeWidth={3}
+              strokeWidth={2.5}
             />
           </>
         )}
       </button>
+
+      <hr className="border-dashed border-secondary/30" />
+
+      <div className="btn-primary from-white! to-white! flex items-center justify-center gap-3 w-full my-2 h-12">
+        <img
+          src="/images/google.webp"
+          alt="Google Icon"
+          className="size-5 object-cover"
+        />
+        <p className="text-background font-bold">Sign in with Google</p>
+      </div>
 
       <div className="flex items-center justify-center gap-1 text-sm">
         <p>{`Are you the new explorer?`}</p>

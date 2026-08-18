@@ -40,10 +40,10 @@ function Input({
       />
 
       {rightIcon && (
-        <div className="absolute flex items-center justify-center top-0 right-0 h-12 px-4 cursor-pointer">
+        <div className="absolute flex items-center justify-center top-0 right-0 h-12 px-4">
           <HugeiconsIcon
             icon={rightIcon}
-            className="size-5"
+            className="size-5 cursor-pointer"
             strokeWidth={2}
             onClick={onRightIconClick}
           />

@@ -18,7 +18,7 @@ import {
 import { toast } from "@/components/ui/toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signUpWithEmail } from "@/hooks/use-auth";
+import { signInWithProvider, signUpWithEmail } from "@/hooks/use-auth";
 
 const schema = yup.object().shape({
   email: yup.string().email().required("email is required"),
@@ -38,6 +38,12 @@ export default function SignUpView() {
     resolver: yupResolver(schema),
     defaultValues: {},
   });
+
+  const handleSignUpWithGoogle = async () => {
+    const response = await signInWithProvider();
+
+    console.log(response);
+  };
 
   const onSubmit = async (params: yup.InferType<typeof schema>) => {
     try {
@@ -130,7 +136,10 @@ export default function SignUpView() {
 
       <hr className="border-dashed border-secondary/30" />
 
-      <div className="btn-primary from-white! to-white! flex items-center justify-center gap-3 w-full my-2 h-12">
+      <div
+        className="btn-primary from-white! to-white! flex items-center justify-center gap-3 w-full my-2 h-12"
+        onClick={handleSignUpWithGoogle}
+      >
         <img
           src="/images/google.webp"
           alt="Google Icon"

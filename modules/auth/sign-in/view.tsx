@@ -7,8 +7,6 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  ArrowLeft,
-  ArrowLeft02Icon,
   ArrowRight02Icon,
   ArrowTurnBackwardIcon,
   At,
@@ -21,6 +19,12 @@ import { toast } from "@/components/ui/toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithEmail, signInWithOTP } from "@/hooks/use-auth";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
 
 export default function SignInView() {
   const [showPassword, setShowPassword] = useState(false);
@@ -39,11 +43,12 @@ export default function SignInView() {
   const {
     handleSubmit,
     register,
-    setValue,
     watch: getValue,
+    setValue,
     formState: { errors, isSubmitting, isValid },
     clearErrors,
     trigger,
+    setValues,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {},
@@ -57,14 +62,18 @@ export default function SignInView() {
         password: params.password!,
       };
 
-      const response = await signInWithEmail(formData);
+      if (params.isLoginWithPassword) {
+        const response = await signInWithEmail(formData);
 
-      if (!response.success) {
-        throw new Error(response?.message);
+        if (!response.success) {
+          throw new Error(response?.message);
+        }
+
+        router.push("/app/dashboard");
+        router.refresh();
+      } else {
+        await handleSendOTP();
       }
-
-      router.push("/app/dashboard");
-      router.refresh();
     } catch (error: any) {
       toast.add({
         title: "Failed to authenticate",
@@ -99,8 +108,10 @@ export default function SignInView() {
   };
 
   const handleBackValidation = () => {
-    setValue("isLoginWithPassword", false);
-    setValue("password", "");
+    setValues({
+      isLoginWithPassword: false,
+      password: "",
+    });
     trigger("email", { shouldFocus: true });
     clearErrors();
   };
@@ -128,6 +139,17 @@ export default function SignInView() {
             </small>
           )}
         </div>
+
+        <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS}>
+          <InputOTPGroup>
+            <InputOTPSlot index={0} />
+            <InputOTPSlot index={1} />
+            <InputOTPSlot index={2} />
+            <InputOTPSlot index={3} />
+            <InputOTPSlot index={4} />
+            <InputOTPSlot index={5} />
+          </InputOTPGroup>
+        </InputOTP>
 
         {getValue("isLoginWithPassword") ? (
           <>

@@ -7,3 +7,8 @@ export interface SignUpWithEmail {
   email: string;
   password: string;
 }
+
+export interface VerifyOTP {
+  email: string;
+  otp: string;
+}

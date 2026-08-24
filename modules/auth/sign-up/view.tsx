@@ -15,10 +15,11 @@ import {
   LockKeyhole,
 } from "@hugeicons/core-free-icons";
 import { toast } from "@/components/ui/toast";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signUpWithEmail } from "@/hooks/use-auth";
 import { createClientSupabase } from "@/lib/supabase/client";
+import { cn } from "@/lib/utils";
 
 const schema = yup.object().shape({
   email: yup.string().email().required("email is required"),
@@ -29,11 +30,28 @@ export default function SignUpView() {
   const [showPassword, setShowPassword] = useState(false);
   const [loadingProvider, setLoadingProvider] = useState(false);
   const router = useRouter();
+  const popupIntervalRef = useRef<any>(null);
+
+  useEffect(() => {
+    const handleMessage = (event: any) => {
+      if (event.origin !== window.location.origin) return;
+      if (event.data === "login-success") {
+        if (popupIntervalRef.current) clearInterval(popupIntervalRef.current);
+
+        router.push("/app/dashboard");
+        router.refresh();
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   const {
     handleSubmit,
     register,
     setValue,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
@@ -45,12 +63,14 @@ export default function SignUpView() {
 
     try {
       setLoadingProvider(true);
-      const client = createClientSupabase();
+      reset();
 
+      const client = createClientSupabase();
       const { data, error } = await client.auth.signInWithOAuth({
         provider: "google",
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
+          skipBrowserRedirect: true,
         },
       });
 
@@ -60,7 +80,31 @@ export default function SignUpView() {
         return;
       }
 
-      console.log("clicked data: ", data);
+      if (data?.url) {
+        const width = 500;
+        const height = 600;
+        const left = window.screen.width / 2 - width / 2;
+        const top = window.screen.height / 2 - height / 2;
+
+        const popup = window.open(
+          data.url,
+          "SupabaseOAuthPopup", // Nama window
+          `width=${width},height=${height},top=${top},left=${left}`,
+        );
+
+        popupIntervalRef.current = setInterval(() => {
+          if (!popup || popup.closed) {
+            clearInterval(popupIntervalRef.current);
+            setLoadingProvider(false);
+
+            toast.add({
+              title: "Failed to create account",
+              description: "Provider popup closed by user",
+              type: "error",
+            });
+          }
+        }, 500);
+      }
     } catch (error) {
       console.error(error);
       setLoadingProvider(false);
@@ -79,8 +123,9 @@ export default function SignUpView() {
       router.refresh();
     } catch (error: any) {
       toast.add({
-        title: "Failed to sign up",
+        title: "Failed to create account",
         description: error?.message as string,
+        type: "error",
       });
       setValue("password", "");
     }
@@ -165,22 +210,12 @@ export default function SignUpView() {
         className="btn-primary from-white! to-white! flex items-center justify-center gap-3 w-full my-2 h-12"
         onClick={handleSignUpWithGoogle}
       >
-        {loadingProvider ? (
-          <HugeiconsIcon
-            icon={Loading03Icon}
-            className="text-background size-5 animate-spin"
-            strokeWidth={3}
-          />
-        ) : (
-          <>
-            <img
-              src="/images/google.webp"
-              alt="Google Icon"
-              className="size-5 object-cover"
-            />
-            <p className="text-background font-bold">Sign up with Google</p>
-          </>
-        )}
+        <img
+          src="/images/google.webp"
+          alt="Google Icon"
+          className="size-5 object-cover"
+        />
+        <p className="text-background font-bold">Sign up with Google</p>
       </button>
 
       <div className="flex items-center justify-center gap-1 text-sm">
@@ -188,6 +223,19 @@ export default function SignUpView() {
         <Link href="/auth/sign-in" passHref>
           <p className="text-secondary font-bold">Sign In</p>
         </Link>
+      </div>
+
+      <div
+        className={cn(
+          "absolute top-0 left-0 -z-10 opacity-0 w-full h-full bg-transparent backdrop-blur-xs flex items-center justify-center duration-300",
+          loadingProvider && "z-10 opacity-100 bg-background/80",
+        )}
+      >
+        <HugeiconsIcon
+          icon={Loading03Icon}
+          className="text-secondary size-5 animate-spin"
+          strokeWidth={3}
+        />
       </div>
     </div>
   );

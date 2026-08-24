@@ -114,6 +114,21 @@
   --color-secondary: #89a7ff;
   --color-card-secondary: #161a26;
   --font-pixel: var(--font-pixel);
+  --animate-caret-blink: caret-blink 1s ease-in-out infinite;
+
+  @keyframes caret-blink {
+    0% {
+      opacity: 100;
+    }
+
+    50% {
+      opacity: 0
+    }
+
+    100% {
+      opacity: 100;
+    }
+  }
 }
 
 * {

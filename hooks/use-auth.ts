@@ -1,12 +1,13 @@
 "use server";
 
 import { createServerSupabase } from "@/lib/supabase/server";
-import { SignInWithEmail, SignUpWithEmail, VerifyOTP } from "@/types/auth";
+import { SignInWithEmail, SignUpWithEmail } from "@/types/auth";
 
 export const signInWithEmail = async (params: SignInWithEmail) => {
   const client = await createServerSupabase();
-  const { data, error } = await client.auth.signInWithOtp({
+  const { data, error } = await client.auth.signInWithPassword({
     email: params.email,
+    password: params.password,
   });
 
   if (error) {
@@ -50,13 +51,10 @@ export const signOutUser = async () => {
   await client.auth.signOut();
 };
 
-export const signInWithOTP = async (params: { email: string }) => {
+export const checkEmailProvider = async (params: { email: string }) => {
   const client = await createServerSupabase();
-  const { data, error } = await client.auth.signInWithOtp({
-    email: params.email,
-    options: {
-      shouldCreateUser: false,
-    },
+  const { data, error } = await client.rpc("cek_provider_email", {
+    email_input: params.email,
   });
 
   if (error) {
@@ -66,31 +64,16 @@ export const signInWithOTP = async (params: { email: string }) => {
     };
   }
 
-  return {
-    success: true,
-    user: data.user,
-    message: "OTP Code sent, please kindly check your email.",
-  };
-};
-
-export const verifyOTP = async (params: VerifyOTP) => {
-  const client = await createServerSupabase();
-  const { data, error } = await client.auth.verifyOtp({
-    email: params.email,
-    token: params.otp,
-    type: "email",
-  });
-
-  if (error) {
+  if (data === "user_unregistered") {
     return {
       success: false,
-      message: error?.message,
+      message: "User not registered",
     };
   }
 
   return {
     success: true,
-    user: data.user,
-    message: "OTP Valid, redirecting you to dashboard.",
+    provider: data,
+    message: "Success retrive user data",
   };
 };

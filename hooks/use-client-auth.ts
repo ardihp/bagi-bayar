@@ -77,5 +77,5 @@ export const useClientAuth = () => {
     }
   };
 
-  return { loadingProvider, popupIntervalRef, handleAuthWithGoogle };
+  return { loadingProvider, handleAuthWithGoogle };
 };

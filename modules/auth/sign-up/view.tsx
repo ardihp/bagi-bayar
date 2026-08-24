@@ -15,11 +15,11 @@ import {
   LockKeyhole,
 } from "@hugeicons/core-free-icons";
 import { toast } from "@/components/ui/toast";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signUpWithEmail } from "@/hooks/use-auth";
-import { createClientSupabase } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
+import { useClientAuth } from "@/hooks/use-client-auth";
 
 const schema = yup.object().shape({
   email: yup.string().email().required("email is required"),
@@ -28,24 +28,8 @@ const schema = yup.object().shape({
 
 export default function SignUpView() {
   const [showPassword, setShowPassword] = useState(false);
-  const [loadingProvider, setLoadingProvider] = useState(false);
+  const { loadingProvider, handleAuthWithGoogle } = useClientAuth();
   const router = useRouter();
-  const popupIntervalRef = useRef<any>(null);
-
-  useEffect(() => {
-    const handleMessage = (event: any) => {
-      if (event.origin !== window.location.origin) return;
-      if (event.data === "login-success") {
-        if (popupIntervalRef.current) clearInterval(popupIntervalRef.current);
-
-        router.push("/app/dashboard");
-        router.refresh();
-      }
-    };
-
-    window.addEventListener("message", handleMessage);
-    return () => window.removeEventListener("message", handleMessage);
-  }, []);
 
   const {
     handleSubmit,
@@ -57,59 +41,6 @@ export default function SignUpView() {
     resolver: yupResolver(schema),
     defaultValues: {},
   });
-
-  const handleSignUpWithGoogle = async () => {
-    if (loadingProvider) return;
-
-    try {
-      setLoadingProvider(true);
-      reset();
-
-      const client = createClientSupabase();
-      const { data, error } = await client.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-          skipBrowserRedirect: true,
-        },
-      });
-
-      if (error) {
-        console.error(error);
-        setLoadingProvider(false);
-        return;
-      }
-
-      if (data?.url) {
-        const width = 500;
-        const height = 600;
-        const left = window.screen.width / 2 - width / 2;
-        const top = window.screen.height / 2 - height / 2;
-
-        const popup = window.open(
-          data.url,
-          "SupabaseOAuthPopup", // Nama window
-          `width=${width},height=${height},top=${top},left=${left}`,
-        );
-
-        popupIntervalRef.current = setInterval(() => {
-          if (!popup || popup.closed) {
-            clearInterval(popupIntervalRef.current);
-            setLoadingProvider(false);
-
-            toast.add({
-              title: "Failed to create account",
-              description: "Provider popup closed by user",
-              type: "error",
-            });
-          }
-        }, 500);
-      }
-    } catch (error) {
-      console.error(error);
-      setLoadingProvider(false);
-    }
-  };
 
   const onSubmit = async (params: yup.InferType<typeof schema>) => {
     try {
@@ -129,6 +60,11 @@ export default function SignUpView() {
       });
       setValue("password", "");
     }
+  };
+
+  const onButtonSignUp = async () => {
+    reset();
+    await handleAuthWithGoogle();
   };
 
   return (
@@ -208,7 +144,7 @@ export default function SignUpView() {
       <button
         type="button"
         className="btn-primary from-white! to-white! flex items-center justify-center gap-3 w-full my-2 h-12"
-        onClick={handleSignUpWithGoogle}
+        onClick={onButtonSignUp}
       >
         <img
           src="/images/google.webp"

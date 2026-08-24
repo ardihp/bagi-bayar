@@ -3,6 +3,7 @@ import { Figtree, Pixelify_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toast";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
 const pixel = Pixelify_Sans({
@@ -62,7 +63,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
-        {children}
+        <TooltipProvider>{children}</TooltipProvider>
         <Toaster timeout={3000} limit={3} />
       </body>
     </html>

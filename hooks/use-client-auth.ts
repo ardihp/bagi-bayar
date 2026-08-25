@@ -45,19 +45,25 @@ export const useClientAuth = () => {
           `width=${width},height=${height},top=${top},left=${left}`,
         );
 
+        const stopPolling = () => {
+          if (popupIntervalRef.current) {
+            clearInterval(popupIntervalRef.current);
+            popupIntervalRef.current = null;
+          }
+        };
+
         const cleanup = () => {
-          popupIntervalRef.current = clearInterval(popupIntervalRef.current);
+          stopPolling();
           channel.close();
           setLoadingProvider(false);
         };
 
         channel.onmessage = (event) => {
-          channelHandled = true;
-
           console.log(event);
+          channelHandled = true;
+          cleanup();
 
           if (event.data?.type === "login-success") {
-            cleanup();
             // Redirect tab utama ke halaman after login
             router.push("/app/dashboard");
             router.refresh();
@@ -74,11 +80,13 @@ export const useClientAuth = () => {
         // Untuk handle user yang close popup secara sengaja
         popupIntervalRef.current = setInterval(() => {
           if (!popup || popup.closed) {
-            clearInterval(popupIntervalRef.current);
-            setLoadingProvider(false);
+            stopPolling();
 
             setTimeout(() => {
               if (!channelHandled) {
+                channelHandled = true;
+                cleanup();
+
                 toast.add({
                   id: "popup",
                   title: "Failed to authenticate",

@@ -52,8 +52,10 @@ export async function GET(request: Request) {
           }
 
           // Force close popup
-          window.open('', '_self', '');
-          window.close();
+          setTimeout(() => {
+            window.open("", "_self", "");
+            window.close();
+          }, 100);
         </script>
       </body>
     </html>

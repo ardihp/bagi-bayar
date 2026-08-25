@@ -10,21 +10,6 @@ export const useClientAuth = () => {
   const popupIntervalRef = useRef<any>(null);
   const router = useRouter();
 
-  useEffect(() => {
-    const handleMessage = (event: any) => {
-      if (event.origin !== window.location.origin) return;
-      if (event.data === "login-success") {
-        if (popupIntervalRef.current) clearInterval(popupIntervalRef.current);
-
-        router.push("/app/dashboard");
-        router.refresh();
-      }
-    };
-
-    window.addEventListener("message", handleMessage);
-    return () => window.removeEventListener("message", handleMessage);
-  }, []);
-
   const handleAuthWithGoogle = async () => {
     if (loadingProvider) return;
 
@@ -52,22 +37,52 @@ export const useClientAuth = () => {
         const left = window.screen.width / 2 - width / 2;
         const top = window.screen.height / 2 - height / 2;
 
+        let channelHandled = false;
+        const channel = new BroadcastChannel("auth_channel");
         const popup = window.open(
           data.url,
           "SupabaseOAuthPopup", // Nama window
           `width=${width},height=${height},top=${top},left=${left}`,
         );
 
+        const cleanup = () => {
+          popupIntervalRef.current = clearInterval(popupIntervalRef.current);
+          channel.close();
+          setLoadingProvider(false);
+        };
+
+        channel.onmessage = (event) => {
+          channelHandled = true;
+
+          if (event.data?.type === "login-success") {
+            cleanup();
+            // Redirect tab utama ke halaman after login
+            router.push("/app/dashboard");
+            router.refresh();
+          } else if (event.data?.type === "login-failed") {
+            toast.add({
+              title: "Failed to authenticate",
+              description: "Provider login failed",
+              type: "error",
+            });
+          }
+        };
+
+        // Untuk handle user yang close popup secara sengaja
         popupIntervalRef.current = setInterval(() => {
           if (!popup || popup.closed) {
             clearInterval(popupIntervalRef.current);
             setLoadingProvider(false);
 
-            toast.add({
-              title: "Failed to authenticate",
-              description: "Provider popup closed by user",
-              type: "error",
-            });
+            setTimeout(() => {
+              if (!channelHandled) {
+                toast.add({
+                  title: "Failed to authenticate",
+                  description: "Provider popup closed by user",
+                  type: "error",
+                });
+              }
+            }, 400);
           }
         }, 500);
       }

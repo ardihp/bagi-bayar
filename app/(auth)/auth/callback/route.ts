@@ -43,16 +43,17 @@ export async function GET(request: Request) {
       <body>
         <p>Autentikasi selesai. Menutup jendela...</p>
         <script>
-          // Pastikan jendela ini adalah popup
-          if (window.opener) {
-            // Kirim status ke jendela utama (parent)
-            window.opener.postMessage('${status}', window.location.origin);
-            // Tutup popup
-            window.close();
-          } else {
-            // Fallback jika dibuka di tab biasa, bukan popup
-            window.location.href = '/'; 
+          try {
+            const channel = new BroadcastChannel("auth_channel");
+            channel.postMessage({ type: "${status}" });
+            channel.close();
+          } catch (e) {
+            console.error(e);
           }
+
+          // Force close popup
+          window.open('', '_self', '');
+          window.close();
         </script>
       </body>
     </html>

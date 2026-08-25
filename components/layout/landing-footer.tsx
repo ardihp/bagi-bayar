@@ -1,4 +1,3 @@
-import { SectionMark } from "@/modules/landing/view";
 import { SplitIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
@@ -6,7 +5,7 @@ import Link from "next/link";
 export default function FooterLanding() {
   return (
     <footer className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1536px)_1fr] border-t-2 border-secondary/10 border-dashed">
-      <SectionMark section="Footer" />
+      <div className="hidden lg:flex items-end justify-end p-3 min-w-20 w-full" />
       <div className="container flex flex-col md:flex-row justify-between items-center gap-4 border-x-0 lg:border-x-2 border-secondary/10 border-dashed pt-6 md:pt-8 pb-8 md:pb-10 px-4 md:px-8 lg:px-12">
         <div className="w-auto md:w-50">
           <Link href="/" className="flex items-center gap-2 md:gap-3 group">

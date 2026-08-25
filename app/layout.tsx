@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Figtree, Pixelify_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toast";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
 const pixel = Pixelify_Sans({
@@ -18,7 +20,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Expense Splitter - Travel Expense Splitter",
+  title: "Expenses Splitter - Travel Expense Splitter",
   description: "Aplikasi pencatat destinasi perjalanan dan pembagi pengeluaran",
   applicationName: "Expense Splitter",
   appleWebApp: {
@@ -61,7 +63,8 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
-        {children}
+        <TooltipProvider>{children}</TooltipProvider>
+        <Toaster timeout={3000} limit={3} />
       </body>
     </html>
   );

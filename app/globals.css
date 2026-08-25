@@ -114,6 +114,21 @@
   --color-secondary: #89a7ff;
   --color-card-secondary: #161a26;
   --font-pixel: var(--font-pixel);
+  --animate-caret-blink: caret-blink 1s ease-in-out infinite;
+
+  @keyframes caret-blink {
+    0% {
+      opacity: 100;
+    }
+
+    50% {
+      opacity: 0
+    }
+
+    100% {
+      opacity: 100;
+    }
+  }
 }
 
 * {
@@ -125,7 +140,7 @@ body {
 }
 
 .btn-primary {
-  @apply bg-linear-to-bl from-primary to-secondary px-4 py-2 rounded-lg relative top-0 shadow-[0_5px_0] shadow-secondary/30 cursor-pointer active:top-1.25 active:shadow-none duration-100;
+  @apply bg-linear-to-bl from-primary to-secondary border-2 border-background/40 px-4 py-2 rounded-lg relative top-0 shadow-[0_5px_0] shadow-secondary/30 cursor-pointer active:top-1.25 active:shadow-none disabled:from-muted-foreground disabled:to-muted-foreground disabled:shadow-muted-foreground/40 transition-all duration-100;
 }
 
 .feature-card {

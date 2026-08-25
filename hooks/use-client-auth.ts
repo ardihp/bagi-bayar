@@ -54,6 +54,8 @@ export const useClientAuth = () => {
         channel.onmessage = (event) => {
           channelHandled = true;
 
+          console.log(event);
+
           if (event.data?.type === "login-success") {
             cleanup();
             // Redirect tab utama ke halaman after login
@@ -61,6 +63,7 @@ export const useClientAuth = () => {
             router.refresh();
           } else if (event.data?.type === "login-failed") {
             toast.add({
+              id: "channel",
               title: "Failed to authenticate",
               description: "Provider login failed",
               type: "error",
@@ -77,6 +80,7 @@ export const useClientAuth = () => {
             setTimeout(() => {
               if (!channelHandled) {
                 toast.add({
+                  id: "popup",
                   title: "Failed to authenticate",
                   description: "Provider popup closed by user",
                   type: "error",

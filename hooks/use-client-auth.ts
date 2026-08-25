@@ -61,7 +61,6 @@ export const useClientAuth = () => {
         channel.onmessage = (event) => {
           console.log(event);
           channelHandled = true;
-          cleanup();
 
           if (event.data?.type === "login-success") {
             // Redirect tab utama ke halaman after login
@@ -75,6 +74,8 @@ export const useClientAuth = () => {
               type: "error",
             });
           }
+
+          cleanup();
         };
 
         // Untuk handle user yang close popup secara sengaja

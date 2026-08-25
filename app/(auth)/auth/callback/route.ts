@@ -46,7 +46,6 @@ export async function GET(request: Request) {
           try {
             const channel = new BroadcastChannel("auth_channel");
             channel.postMessage({ type: "${status}" });
-            channel.close();
           } catch (e) {
             console.error(e);
           }
@@ -55,7 +54,7 @@ export async function GET(request: Request) {
           setTimeout(() => {
             window.open("", "_self", "");
             window.close();
-          }, 100);
+          }, 200);
         </script>
       </body>
     </html>

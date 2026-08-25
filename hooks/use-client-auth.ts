@@ -59,7 +59,6 @@ export const useClientAuth = () => {
         };
 
         channel.onmessage = (event) => {
-          console.log(event);
           channelHandled = true;
 
           if (event.data?.type === "login-success") {

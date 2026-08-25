@@ -149,11 +149,11 @@ export default function SignInView() {
             getValue("isEmailVerify") && "opacity-100 h-full",
           )}
         >
-          <label htmlFor="pswrd" className="font-semibold">
+          <label htmlFor="password" className="font-semibold">
             Password
           </label>
           <Input
-            id="pswrd"
+            id="password"
             type={showPassword ? "text" : "password"}
             placeholder="Input password"
             aria-invalid={errors?.password ? "true" : "false"}

@@ -143,15 +143,17 @@ export default function SignUpView() {
 
       <button
         type="button"
-        className="btn-primary from-white! to-white! flex items-center justify-center gap-3 w-full my-2 h-12"
+        className="btn-primary from-white! to-white! flex items-center justify-center gap-2 sm:gap-3 w-full my-2 min-h-12"
         onClick={onButtonSignUp}
       >
         <img
           src="/images/google.webp"
           alt="Google Icon"
-          className="size-5 object-cover"
+          className="size-5 shrink-0 object-cover"
         />
-        <p className="text-background font-bold">Sign up with Google</p>
+        <p className="text-background font-bold text-center">
+          Sign up with Google
+        </p>
       </button>
 
       <div className="flex items-center justify-center gap-1 text-sm">

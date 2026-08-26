@@ -33,6 +33,7 @@ const schema = yup.object().shape({
 
 export default function SignInView() {
   const [showPassword, setShowPassword] = useState(false);
+  const [loadingVerifyEmail, setLoadingVerifyEmail] = useState(false);
   const { loadingProvider, handleAuthWithGoogle } = useClientAuth();
   const router = useRouter();
 
@@ -41,6 +42,7 @@ export default function SignInView() {
     register,
     watch: getValue,
     setValue,
+    setValues,
     formState: { errors, isSubmitting },
     trigger,
     reset,
@@ -57,24 +59,24 @@ export default function SignInView() {
     if (!params.isEmailVerify) return handleContinuePassword();
 
     try {
-      const response = await signInWithEmail({
+      const { message, success } = await signInWithEmail({
         email: params.email,
         password: params.password!,
       });
 
-      if (!response.success) {
-        throw new Error(response?.message);
+      if (!success) {
+        throw new Error(message);
       }
 
       router.push("/app/dashboard");
       router.refresh();
     } catch (error: any) {
+      setValue("password", "");
       toast.add({
         title: "Failed to authenticate",
         description: error?.message as string,
         type: "error",
       });
-      setValue("password", "");
     }
   };
 
@@ -82,30 +84,35 @@ export default function SignInView() {
     const isEmailValid = await trigger("email", { shouldFocus: true });
     if (!getValue("email")) return;
 
-    const { provider, message, success } = await checkEmailProvider({
-      email: getValue("email"),
-    });
+    setLoadingVerifyEmail(true);
 
-    if (!success) {
-      setValue("email", "");
-      return toast.add({
-        title: "Failed to authenticate",
-        description: message,
-        type: "error",
+    try {
+      const { provider, message, success } = await checkEmailProvider({
+        email: getValue("email"),
       });
-    }
 
-    if (isEmailValid && provider === "email") {
-      setFocus("password", { shouldSelect: true });
-      setValue("isEmailVerify", true, { shouldValidate: false });
-    } else {
-      setValue("email", "");
-      return toast.add({
-        title: "Failed to authenticate",
-        description:
+      if (!success) {
+        throw new Error(message);
+      }
+
+      if (isEmailValid && provider === "email") {
+        setFocus("password", { shouldSelect: true });
+        setValue("isEmailVerify", true, { shouldValidate: false });
+      } else {
+        throw new Error(
           "This email is registered using google account, please use sign in with google option",
+        );
+      }
+    } catch (error: any) {
+      setValues({ email: "", password: "" });
+      setLoadingVerifyEmail(false);
+      toast.add({
+        title: "Failed to authenticate",
+        description: error?.message as string,
         type: "error",
       });
+    } finally {
+      setLoadingVerifyEmail(false);
     }
   };
 
@@ -214,7 +221,8 @@ export default function SignInView() {
       <div
         className={cn(
           "absolute top-0 left-0 -z-10 opacity-0 w-full h-full bg-transparent backdrop-blur-xs flex items-center justify-center duration-300",
-          loadingSubmit && "z-10 opacity-100 bg-background/80",
+          (loadingSubmit || loadingVerifyEmail) &&
+            "z-10 opacity-100 bg-background/80",
         )}
       >
         <HugeiconsIcon

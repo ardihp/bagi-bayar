@@ -130,7 +130,7 @@ export default function SignInView() {
             !getValue("isEmailVerify") && "-mb-4",
           )}
         >
-          <label htmlFor="email" className="font-semibold">
+          <label htmlFor="email" className="font-semibold hidden md:inline">
             Email
           </label>
           <Input
@@ -156,7 +156,7 @@ export default function SignInView() {
             getValue("isEmailVerify") && "opacity-100 h-full",
           )}
         >
-          <label htmlFor="password" className="font-semibold">
+          <label htmlFor="password" className="font-semibold hidden md:inline">
             Password
           </label>
           <Input

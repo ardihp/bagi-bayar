@@ -111,14 +111,19 @@ export default function HeaderLanding() {
               </div>
             ))}
             <div className="flex gap-4 mt-2">
-              <button className="btn-primary from-transparent! to-transparent! bg-card-secondary shadow-secondary/3! w-full">
-                <p className="opacity-70 text-sm font-semibold">Sign In</p>
-              </button>
-              <button className="btn-primary w-full">
-                <p className="text-sm text-background font-bold">
+              <Link
+                href="/auth/sign-in"
+                className="btn-primary from-transparent! to-transparent! bg-card-secondary shadow-secondary/3! w-full"
+              >
+                <p className="opacity-70 text-sm font-semibold text-center">
+                  Sign In
+                </p>
+              </Link>
+              <Link href="/guest" className="btn-primary w-full">
+                <p className="text-sm text-background font-bold text-center">
                   Start as Guest
                 </p>
-              </button>
+              </Link>
             </div>
           </div>
         </div>

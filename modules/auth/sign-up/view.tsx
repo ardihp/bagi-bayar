@@ -71,7 +71,7 @@ export default function SignUpView() {
     <div className="flex flex-col gap-4">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <label htmlFor="email" className="font-semibold">
+          <label htmlFor="email" className="font-semibold hidden md:inline">
             Email
           </label>
           <Input
@@ -92,7 +92,7 @@ export default function SignUpView() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label htmlFor="password" className="font-semibold">
+          <label htmlFor="password" className="font-semibold hidden md:inline">
             Password
           </label>
           <div className="relative">

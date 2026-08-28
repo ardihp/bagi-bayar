@@ -33,7 +33,7 @@ export default function HeaderLanding() {
   return (
     <nav className="sticky top-0 z-40 bg-background/80 lg:bg-background lg:relative lg:z-auto grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1536px)_1fr] border-b-2 border-dashed border-secondary/10">
       <div className="hidden lg:flex items-end justify-end p-3 min-w-20 w-full" />
-      <div className="container flex items-center border-x-2 border-secondary/10 backdrop-blur-md lg:backdrop-blur-none border-dashed mb-2 py-4 md:py-6 px-4 md:px-8 lg:px-12">
+      <div className="container flex items-center border-x-2 border-secondary/10 backdrop-blur-md lg:backdrop-blur-none border-dashed mb-2 py-4 lg:py-6 px-4 lg:px-8 lg:px-12">
         <div className="w-auto md:w-54">
           <Link
             href="/"
@@ -52,7 +52,7 @@ export default function HeaderLanding() {
         </div>
 
         {/* Desktop navigation */}
-        <div className="hidden lg:flex items-center gap-14 mx-auto">
+        <div className="hidden lg:flex items-center gap-14 mx-auto mt-2">
           {navbarItems.map((item) => (
             <div
               key={item.name}
@@ -65,7 +65,7 @@ export default function HeaderLanding() {
         </div>
 
         {/* Desktop sign in */}
-        <div className="hidden lg:flex items-center justify-between w-54 pb-1.25">
+        <div className="hidden lg:flex items-center justify-between w-54">
           <Link href="/auth/sign-in" passHref>
             <div className="py-2 px-4 rounded-lg bg-transparent hover:bg-card-secondary hover:cursor-pointer duration-200">
               <p className="opacity-70 text-sm font-semibold">Sign In</p>

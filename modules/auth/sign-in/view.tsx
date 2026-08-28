@@ -180,11 +180,7 @@ export default function SignInView() {
 
         <button
           key={getValue("isEmailVerify") ? "btn-submit" : "btn-continue"}
-          type={getValue("isEmailVerify") ? "submit" : "button"}
           className="btn-primary flex items-center justify-center gap-2 w-full my-2 h-12"
-          onClick={
-            getValue("isEmailVerify") ? () => {} : handleContinuePassword
-          }
         >
           <p className="text-background font-bold">
             {getValue("isEmailVerify") ? "Sign In" : "Continue"}

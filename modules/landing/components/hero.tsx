@@ -3,13 +3,18 @@
 import { SubmitEvent, useState } from "react";
 import { CircleIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useRouter } from "next/navigation";
 // import Image from "next/image";
 
 export default function HeroSection() {
   const [email, setEmail] = useState<string>("");
+  const router = useRouter();
 
   function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    localStorage.setItem("temp_email_signup", email);
+    router.push("/auth/sign-up");
   }
 
   return (
@@ -43,7 +48,7 @@ export default function HeroSection() {
 
       <form
         onSubmit={handleSubmit}
-        className="relative flex border border-secondary/30 bg-secondary/5 rounded-full pl-3 pr-1.5 md:pl-4 md:pr-2 w-full max-w-[calc(100%-1rem)] sm:max-w-sm"
+        className="relative flex border border-secondary/30 bg-secondary/5 rounded-lg pl-3 pr-1.5 md:pl-4 md:pr-2 w-full max-w-[calc(100%-1rem)] sm:max-w-sm"
       >
         <input
           type="email"
@@ -55,7 +60,7 @@ export default function HeroSection() {
         />
 
         <div className="pt-0.5 pb-3">
-          <button className="btn-primary rounded-full!">
+          <button className="btn-primary rounded-lg!">
             <p className="text-xs md:text-sm whitespace-nowrap text-background font-bold">
               Get Started
             </p>

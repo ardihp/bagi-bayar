@@ -15,7 +15,7 @@ import {
   LockKeyhole,
 } from "@hugeicons/core-free-icons";
 import { toast } from "@/components/ui/toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signUpWithEmail } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
@@ -41,6 +41,15 @@ export default function SignUpView() {
     resolver: yupResolver(schema),
     defaultValues: {},
   });
+
+  useEffect(() => {
+    const tempEmail = localStorage.getItem("temp_email_signup");
+
+    if (tempEmail) {
+      setValue("email", tempEmail);
+      localStorage.removeItem("temp_email_signup");
+    }
+  }, []);
 
   const onSubmit = async (params: yup.InferType<typeof schema>) => {
     try {
@@ -120,22 +129,12 @@ export default function SignUpView() {
           type="submit"
           className="btn-primary flex items-center justify-center gap-2 w-full my-2 h-12"
         >
-          {isSubmitting ? (
-            <HugeiconsIcon
-              icon={Loading03Icon}
-              className="text-background size-5 animate-spin"
-              strokeWidth={3}
-            />
-          ) : (
-            <>
-              <p className="text-background font-bold">Create Account</p>
-              <HugeiconsIcon
-                icon={ArrowRight02Icon}
-                className="text-background size-5"
-                strokeWidth={2.5}
-              />
-            </>
-          )}
+          <p className="text-background font-bold">Create Account</p>
+          <HugeiconsIcon
+            icon={ArrowRight02Icon}
+            className="text-background size-5"
+            strokeWidth={2.5}
+          />
         </button>
       </form>
 
@@ -166,7 +165,8 @@ export default function SignUpView() {
       <div
         className={cn(
           "absolute top-0 left-0 -z-10 opacity-0 w-full h-full bg-transparent backdrop-blur-xs flex items-center justify-center duration-300",
-          loadingProvider && "z-10 opacity-100 bg-background/80",
+          (loadingProvider || isSubmitting) &&
+            "z-10 opacity-100 bg-background/80",
         )}
       >
         <HugeiconsIcon

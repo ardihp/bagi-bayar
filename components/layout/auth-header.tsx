@@ -8,6 +8,37 @@ import { usePathname } from "next/navigation";
 export default function HeaderAuth() {
   const pathname = usePathname();
 
+  const textContent = (() => {
+    let content = { title: "", subtitle: "" };
+
+    switch (pathname) {
+      case "/auth/sign-in":
+        content = {
+          title: "Welcome back, explorer!",
+          subtitle: "Log in to track your trips and stay on budget.",
+        };
+        break;
+      case "/auth/sign-up":
+        content = {
+          title: "Ready for your next adventure?",
+          subtitle:
+            "Create an account and effortlessly track your travel expenses.",
+        };
+        break;
+      case "/guest":
+        content = {
+          title: "Ready to explore?",
+          subtitle: "Start a new trip or access an existing one with a code.",
+        };
+        break;
+      default:
+        content = { title: "", subtitle: "" };
+        break;
+    }
+
+    return content;
+  })();
+
   return (
     <div className="flex flex-col items-center justify-center gap-4 md:gap-6 px-2 pb-1.25">
       <Link href="/" title="Back to home" passHref>
@@ -21,15 +52,11 @@ export default function HeaderAuth() {
       </Link>
       <div className="flex flex-col items-center gap-2">
         <p className="font-semibold text-xl md:text-3xl text-center">
-          {pathname?.includes("sign-in")
-            ? "Welcome back, explorer!"
-            : "Ready for your next adventure?"}
+          {textContent.title}
         </p>
 
         <p className="text-sm md:text-base opacity-70 text-center text-pretty">
-          {pathname?.includes("sign-in")
-            ? "Log in to track your trips and stay on budget."
-            : "Create an account and effortlessly track your travel expenses."}
+          {textContent.subtitle}
         </p>
       </div>
     </div>

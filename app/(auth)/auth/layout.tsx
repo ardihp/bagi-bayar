@@ -18,25 +18,25 @@ export default async function AuthLayoutPage({
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,768px)_1fr] first:grid-cols-[1fr_minmax(0,1526px)_1fr] duration-700 delay-200">
+    <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,768px)_1fr] duration-700 delay-200">
       <div className="hidden lg:flex items-end justify-end p-3 min-w-20 w-full h-24.25" />
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1536px)_1fr] border-x-2 border-dashed border-secondary/10 h-24.25" />
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1536px)_1fr] border-0 lg:border-x-2 border-dashed border-secondary/10 h-24.25" />
       <div className="hidden lg:block min-w-20 h-24.25" />
 
-      <hr className="border-t-2 border-dashed border-secondary/10 col-span-1 lg:col-span-3" />
+      <hr className="border-0 lg:border-t-2 border-dashed border-secondary/10 col-span-1 lg:col-span-3" />
       <div className="hidden lg:flex items-end justify-end p-3 min-w-20 w-full" />
-      <div className="container flex flex-col h-[calc(100vh-198px)] p-12 pt-10 justify-between">
+      <div className="container flex flex-col min-h-[calc(100dvh-198px)] p-4 pt-6 sm:p-8 lg:p-12 lg:pt-10 justify-center md:justify-between gap-4 border-0! lg:border-x-2!">
         <HeaderAuth />
 
-        <div className="p-8 rounded-2xl border border-secondary/30 bg-secondary/5 w-full relative overflow-hidden">
+        <div className="p-5 sm:p-8 rounded-2xl md:border md:border-secondary/30 md:bg-secondary/5 w-full relative overflow-hidden">
           {children}
         </div>
       </div>
       <div className="hidden lg:block min-w-20" />
 
-      <hr className="border-t-2 border-dashed border-secondary/10 col-span-1 lg:col-span-3" />
+      <hr className="border-0 lg:border-t-2 border-dashed border-secondary/10 col-span-1 lg:col-span-3" />
       <div className="hidden lg:flex items-end justify-end p-3 min-w-20 w-full h-24.25" />
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1536px)_1fr] border-x-2 border-dashed border-secondary/10 h-24.25" />
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1536px)_1fr] border-0 lg:border-x-2 border-dashed border-secondary/10 h-24.25" />
       <div className="hidden lg:block min-w-20 h-24.25" />
     </div>
   );

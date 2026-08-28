@@ -130,7 +130,7 @@ export default function SignInView() {
             !getValue("isEmailVerify") && "-mb-4",
           )}
         >
-          <label htmlFor="email" className="font-semibold">
+          <label htmlFor="email" className="font-semibold hidden md:inline">
             Email
           </label>
           <Input
@@ -156,7 +156,7 @@ export default function SignInView() {
             getValue("isEmailVerify") && "opacity-100 h-full",
           )}
         >
-          <label htmlFor="password" className="font-semibold">
+          <label htmlFor="password" className="font-semibold hidden md:inline">
             Password
           </label>
           <Input
@@ -180,11 +180,7 @@ export default function SignInView() {
 
         <button
           key={getValue("isEmailVerify") ? "btn-submit" : "btn-continue"}
-          type={getValue("isEmailVerify") ? "submit" : "button"}
           className="btn-primary flex items-center justify-center gap-2 w-full my-2 h-12"
-          onClick={
-            getValue("isEmailVerify") ? () => {} : handleContinuePassword
-          }
         >
           <p className="text-background font-bold">
             {getValue("isEmailVerify") ? "Sign In" : "Continue"}
@@ -200,15 +196,17 @@ export default function SignInView() {
       <hr className="border-dashed border-secondary/30" />
 
       <button
-        className="btn-primary from-white! to-white! flex items-center justify-center gap-3 w-full my-2 h-12"
+        className="btn-primary from-white! to-white! flex items-center justify-center gap-2 sm:gap-3 w-full my-2 min-h-12"
         onClick={onButtonProvider}
       >
         <img
           src="/images/google.webp"
           alt="Google Icon"
-          className="size-5 object-cover"
+          className="size-5 shrink-0 object-cover"
         />
-        <p className="text-background font-bold">Sign in with Google</p>
+        <p className="text-background font-bold text-center">
+          Sign in with Google
+        </p>
       </button>
 
       <div className="flex items-center justify-center gap-1 text-sm">

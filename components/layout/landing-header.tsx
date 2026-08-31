@@ -33,7 +33,7 @@ export function WebLogo({
         className="flex items-center gap-2 md:gap-4 group"
         onClick={handleBackToTopClick}
       >
-        <div className="relative top-0 p-1.5 rounded-lg bg-linear-to-bl from-primary to-secondary shadow-[0_5px_0] shadow-secondary/30 group-active:top-1.25 group-active:shadow-none duration-200">
+        <div className="relative top-0 p-1.5 border-2 border-background/40 rounded-lg bg-linear-to-bl from-primary to-secondary shadow-[0_5px_0] shadow-secondary/30 group-active:top-1.25 group-active:shadow-none duration-200">
           <HugeiconsIcon
             icon={SplitIcon}
             strokeWidth={2}

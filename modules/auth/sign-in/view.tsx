@@ -122,7 +122,7 @@ export default function SignInView() {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2 md:gap-4">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div
           className={cn(
@@ -182,7 +182,7 @@ export default function SignInView() {
           key={getValue("isEmailVerify") ? "btn-submit" : "btn-continue"}
           className="btn-primary flex items-center justify-center gap-2 w-full my-2 h-12"
         >
-          <p className="text-background font-bold">
+          <p className="text-background font-bold text-sm md:text-base">
             {getValue("isEmailVerify") ? "Sign In" : "Continue"}
           </p>
           <HugeiconsIcon
@@ -204,7 +204,7 @@ export default function SignInView() {
           alt="Google Icon"
           className="size-5 shrink-0 object-cover"
         />
-        <p className="text-background font-bold text-center">
+        <p className="text-sm md:text-base text-background font-bold text-center">
           Sign in with Google
         </p>
       </button>

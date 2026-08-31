@@ -50,7 +50,7 @@ export default function HeaderAuth() {
           />
         </div>
       </Link>
-      <div className="flex flex-col items-center gap-2">
+      <div className="flex flex-col items-center md:gap-2">
         <p className="font-semibold text-xl md:text-3xl text-center">
           {textContent.title}
         </p>

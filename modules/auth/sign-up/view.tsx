@@ -77,7 +77,7 @@ export default function SignUpView() {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2 md:gap-4">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
           <label htmlFor="email" className="font-semibold hidden md:inline">
@@ -129,7 +129,7 @@ export default function SignUpView() {
           type="submit"
           className="btn-primary flex items-center justify-center gap-2 w-full my-2 h-12"
         >
-          <p className="text-background font-bold">Create Account</p>
+          <p className="text-background font-bold text-sm md:text-base">Create Account</p>
           <HugeiconsIcon
             icon={ArrowRight02Icon}
             className="text-background size-5"
@@ -150,7 +150,7 @@ export default function SignUpView() {
           alt="Google Icon"
           className="size-5 shrink-0 object-cover"
         />
-        <p className="text-background font-bold text-center">
+        <p className="text-sm md:text-base text-background font-bold text-center">
           Sign up with Google
         </p>
       </button>

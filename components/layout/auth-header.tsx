@@ -32,7 +32,7 @@ export default function HeaderAuth() {
   })();
 
   return (
-    <div className="flex flex-col justify-center gap-4 md:gap-6 px-2 pb-1.25">
+    <div className="flex flex-col justify-center gap-4 md:gap-6 pb-1.25">
       <WebLogo />
 
       <div className="flex flex-col gap-1 md:gap-2">

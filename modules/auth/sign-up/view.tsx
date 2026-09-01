@@ -79,14 +79,13 @@ export default function SignUpView() {
   return (
     <div className="flex flex-col gap-2 md:gap-4">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <p className="text-lg md:text-xl font-semibold">Sign Up</p>
+
         <div className="flex flex-col gap-2">
-          <label htmlFor="email" className="font-semibold hidden md:inline">
-            Email
-          </label>
           <Input
             id="email"
             type="email"
-            placeholder="Input email"
+            placeholder="john.doe@gmail.com"
             aria-invalid={errors?.email ? "true" : "false"}
             className="h-12 rounded-lg"
             leftIcon={At}
@@ -101,14 +100,11 @@ export default function SignUpView() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label htmlFor="password" className="font-semibold hidden md:inline">
-            Password
-          </label>
           <div className="relative">
             <Input
               id="password"
               type={showPassword ? "text" : "password"}
-              placeholder="Input password"
+              placeholder="Minimum password 8 length"
               aria-invalid={errors?.password ? "true" : "false"}
               className="h-12 rounded-lg px-13"
               leftIcon={LockKeyhole}
@@ -129,7 +125,9 @@ export default function SignUpView() {
           type="submit"
           className="btn-primary flex items-center justify-center gap-2 w-full my-2 h-12"
         >
-          <p className="text-background font-bold text-sm md:text-base">Create Account</p>
+          <p className="text-background font-bold text-sm md:text-base">
+            Create Account
+          </p>
           <HugeiconsIcon
             icon={ArrowRight02Icon}
             className="text-background size-5"

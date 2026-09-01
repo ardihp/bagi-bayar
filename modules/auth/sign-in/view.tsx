@@ -124,19 +124,18 @@ export default function SignInView() {
   return (
     <div className="flex flex-col gap-2 md:gap-4">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <p className="text-lg md:text-xl font-semibold">Sign In</p>
+
         <div
           className={cn(
             "flex flex-col gap-2",
             !getValue("isEmailVerify") && "-mb-4",
           )}
         >
-          <label htmlFor="email" className="font-semibold hidden md:inline">
-            Email
-          </label>
           <Input
             id="email"
             type="email"
-            placeholder="Input email"
+            placeholder="john.doe@gmail.com"
             aria-invalid={errors?.email ? "true" : "false"}
             className="h-12 rounded-lg"
             leftIcon={At}
@@ -156,13 +155,10 @@ export default function SignInView() {
             getValue("isEmailVerify") && "opacity-100 h-full",
           )}
         >
-          <label htmlFor="password" className="font-semibold hidden md:inline">
-            Password
-          </label>
           <Input
             id="password"
             type={showPassword ? "text" : "password"}
-            placeholder="Input password"
+            placeholder="Minimum password 8 length"
             aria-invalid={errors?.password ? "true" : "false"}
             className="h-12 rounded-lg px-13"
             leftIcon={LockKeyhole}

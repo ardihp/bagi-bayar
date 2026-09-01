@@ -27,7 +27,7 @@ export function WebLogo({
   };
 
   return (
-    <div className="w-auto md:w-54 group">
+    <div className="w-fit md:w-54 group">
       <Link
         href="/"
         className="flex items-center gap-2 md:gap-4 group"

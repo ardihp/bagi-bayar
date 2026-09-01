@@ -79,7 +79,9 @@ export default function SignUpView() {
   return (
     <div className="flex flex-col gap-2 md:gap-4">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <p className="text-lg md:text-xl font-semibold">Sign Up</p>
+        <p className="text-lg md:text-xl font-semibold hidden md:inline">
+          Sign Up
+        </p>
 
         <div className="flex flex-col gap-2">
           <Input

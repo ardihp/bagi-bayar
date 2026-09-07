@@ -8,6 +8,7 @@ import {
   Menu01Icon,
   Cancel01Icon,
 } from "@hugeicons/core-free-icons";
+import { cn } from "@/lib/utils";
 
 const navbarItems = [
   { name: "Features", link: "#features" },
@@ -27,10 +28,13 @@ export function WebLogo({
   };
 
   return (
-    <div className="w-fit md:w-54 group">
+    <div className={cn("w-fit md:w-54 group", isLogoOnly && "w-fit!")}>
       <Link
         href="/"
-        className="flex items-center gap-2 md:gap-4 group"
+        className={cn(
+          "flex items-center gap-2 md:gap-4 group",
+          isLogoOnly && "justify-center w-fit",
+        )}
         onClick={handleBackToTopClick}
       >
         <div className="relative top-0 p-1.5 border-2 border-background/40 rounded-lg bg-linear-to-bl from-primary to-secondary shadow-[0_5px_0] shadow-secondary/30 group-active:top-1.25 group-active:shadow-none duration-200">
@@ -132,7 +136,7 @@ export default function HeaderLanding() {
             <div className="flex gap-4 mt-2">
               <Link
                 href="/auth/sign-in"
-                className="btn-primary from-transparent! to-transparent! bg-card-secondary shadow-secondary/3! w-full"
+                className="btn-primary border-secondary/5! from-transparent! to-transparent! bg-card-secondary shadow-secondary/3! w-full"
               >
                 <p className="opacity-70 text-sm font-semibold text-center">
                   Sign In

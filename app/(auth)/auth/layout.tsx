@@ -28,7 +28,7 @@ export default async function AuthLayoutPage({
       <div className="container flex flex-col min-h-[calc(100dvh-132px)] p-5 sm:p-8 lg:p-12 lg:pt-10 md:justify-between gap-6 md:gap-4 border-0! lg:border-x-2!">
         <HeaderAuth />
 
-        <div className="md:p-8 rounded-2xl md:border md:border-secondary/30 md:bg-secondary/5 w-full">
+        <div className="rounded-2xl md:border md:border-secondary/30 md:bg-secondary/5 w-full md:overflow-hidden">
           {children}
         </div>
       </div>

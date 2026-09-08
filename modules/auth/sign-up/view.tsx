@@ -77,7 +77,7 @@ export default function SignUpView() {
   };
 
   return (
-    <div className="flex flex-col gap-2 md:gap-4">
+    <div className="flex flex-col gap-2 md:gap-4 md:p-8 relative">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <p className="text-lg md:text-xl font-semibold hidden md:inline">
           Sign Up

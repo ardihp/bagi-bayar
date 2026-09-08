@@ -122,7 +122,7 @@ export default function SignInView() {
   };
 
   return (
-    <div className="flex flex-col gap-2 md:gap-4">
+    <div className="flex flex-col gap-2 md:gap-4 relative md:p-8">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <p className="text-lg md:text-xl font-semibold hidden md:inline">
           Sign In

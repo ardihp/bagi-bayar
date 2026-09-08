@@ -8,11 +8,54 @@ import {
   Menu01Icon,
   Cancel01Icon,
 } from "@hugeicons/core-free-icons";
+import { cn } from "@/lib/utils";
 
 const navbarItems = [
   { name: "Features", link: "#features" },
   { name: "How it Works", link: "#how-it-works" },
 ];
+
+export function WebLogo({
+  onLogoClick = () => {},
+  isLogoOnly = false,
+}: {
+  onLogoClick?: () => void;
+  isLogoOnly?: boolean;
+}) {
+  const handleBackToTopClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    onLogoClick();
+  };
+
+  return (
+    <div className={cn("w-fit md:w-54 group", isLogoOnly && "w-fit!")}>
+      <Link
+        href="/"
+        className={cn(
+          "flex items-center gap-2 md:gap-4 group",
+          isLogoOnly && "justify-center w-fit",
+        )}
+        onClick={handleBackToTopClick}
+      >
+        <div className="relative top-0 p-1.5 border-2 border-background/40 rounded-lg bg-linear-to-bl from-primary to-secondary shadow-[0_5px_0] shadow-secondary/30 group-active:top-1.25 group-active:shadow-none duration-200">
+          <HugeiconsIcon
+            icon={SplitIcon}
+            strokeWidth={2}
+            className="size-4 md:size-5 text-background rotate-90"
+          />
+        </div>
+        {!isLogoOnly && (
+          <p className="font-bold text-base md:text-lg mt-1.25 text-white group group-hover:text-secondary duration-200">
+            Expenses{" "}
+            <span className="text-secondary group-hover:text-white duration-200">
+              Splitter
+            </span>
+          </p>
+        )}
+      </Link>
+    </div>
+  );
+}
 
 export default function HeaderLanding() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -25,31 +68,11 @@ export default function HeaderLanding() {
     setMobileMenuOpen(false);
   };
 
-  const handleBackToTopClick = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setMobileMenuOpen(false);
-  };
-
   return (
     <nav className="sticky top-0 z-40 bg-background/80 lg:bg-background lg:relative lg:z-auto grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1536px)_1fr] border-b-2 border-dashed border-secondary/10">
       <div className="hidden lg:flex items-end justify-end p-3 min-w-20 w-full" />
       <div className="container flex items-center border-x-2 border-secondary/10 backdrop-blur-md lg:backdrop-blur-none border-dashed mb-2 py-4 lg:py-6 px-4 lg:px-8 lg:px-12">
-        <div className="w-auto md:w-54">
-          <Link
-            href="/"
-            className="flex items-center gap-2 md:gap-4 group"
-            onClick={handleBackToTopClick}
-          >
-            <div className="relative top-0 p-1.5 rounded-lg bg-linear-to-bl from-primary to-secondary shadow-[0_5px_0] shadow-secondary/30 group-active:top-1.25 group-active:shadow-none duration-200">
-              <HugeiconsIcon
-                icon={SplitIcon}
-                strokeWidth={2}
-                className="size-4 md:size-5 text-background rotate-90"
-              />
-            </div>
-            <p className="font-bold text-base md:text-lg">Expenses Splitter</p>
-          </Link>
-        </div>
+        <WebLogo onLogoClick={() => setMobileMenuOpen(false)} />
 
         {/* Desktop navigation */}
         <div className="hidden lg:flex items-center gap-14 mx-auto mt-2">
@@ -113,7 +136,7 @@ export default function HeaderLanding() {
             <div className="flex gap-4 mt-2">
               <Link
                 href="/auth/sign-in"
-                className="btn-primary from-transparent! to-transparent! bg-card-secondary shadow-secondary/3! w-full"
+                className="btn-primary border-secondary/5! from-transparent! to-transparent! bg-card-secondary shadow-secondary/3! w-full"
               >
                 <p className="opacity-70 text-sm font-semibold text-center">
                   Sign In

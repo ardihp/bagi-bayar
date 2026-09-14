@@ -65,7 +65,7 @@ export default function GuestModeView() {
 
       <hr className="border-0 lg:border-t-2 border-dashed border-secondary/10 col-span-1 lg:col-span-3" />
       <div className="hidden lg:flex items-end justify-end p-3 min-w-20 w-full" />
-      <div className="container relative flex flex-col min-h-[calc(100dvh-132px)] p-5 sm:p-8 lg:p-12 lg:pt-10 md:justify-between gap-8 md:gap-4 border-0! lg:border-x-2!">
+      <div className="container relative flex flex-col min-h-[calc(100dvh-132px)] md:justify-between p-5 sm:p-8 lg:p-12 lg:pt-10 gap-8 md:gap-40 border-0! lg:border-x-2!">
         <div className="flex flex-col justify-center gap-4 md:gap-6 pb-1.25 w-fit">
           {mode === "none" ? (
             <WebLogo />

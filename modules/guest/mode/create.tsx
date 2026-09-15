@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import {
   Calendar03Icon,
   Contact,
-  Edit,
   File01Icon,
   X,
 } from "@hugeicons/core-free-icons";
@@ -19,17 +18,7 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { DateRange } from "react-day-picker";
 import { format } from "date-fns";
-import { generateRandomID } from "@/lib/utils";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+import ParticipantDrawer from "./components/participant-drawer";
 
 const schema = yup.object().shape({
   name: yup.string().min(1, "Name trip is required"),
@@ -40,7 +29,7 @@ const schema = yup.object().shape({
     then: (schema) => schema.optional(),
     otherwise: (schema) => schema.required("Date end is required"),
   }),
-  groupMember: yup
+  participants: yup
     .array()
     .of(
       yup.object({
@@ -48,8 +37,8 @@ const schema = yup.object().shape({
         name: yup.string().required("Name is required"),
       }),
     )
-    .min(1, "Atleast 1 group member is required to involve")
-    .required(),
+    .min(1, "Atleast 1 participant is required to involve")
+    .required("Atleast 1 participant is required to involve"),
   listExpenses: yup.array().min(1, "Atleast 1 expenses item is required"),
 });
 
@@ -66,13 +55,11 @@ export default function CreateMode() {
     resolver: yupResolver(schema),
     mode: "onSubmit",
     reValidateMode: "onChange",
-    defaultValues: {
-      isOneDayTrip: false,
-      groupMember: [{ id: generateRandomID(), name: "" }],
-    },
+    defaultValues: { isOneDayTrip: false },
   });
 
   console.log(errors);
+  console.log(getValue());
 
   const onSubmit = (params: yup.InferType<typeof schema>) => {
     console.log(params);
@@ -96,39 +83,8 @@ export default function CreateMode() {
     trigger("endDate");
   };
 
-  const handleMemberValueChange = (member: { id: string; name: string }) => {
-    let newMembers = getValue("groupMember");
-
-    newMembers = newMembers.map((mem) => {
-      if (mem.id === member.id) {
-        return { ...mem, name: member.name };
-      } else {
-        return mem;
-      }
-    });
-
-    setValue("groupMember", newMembers);
-    trigger("groupMember");
-  };
-
-  const handleAddMember = () => {
-    setValue("groupMember", [
-      ...getValue("groupMember"),
-      { id: generateRandomID(), name: "" },
-    ]);
-    trigger("groupMember");
-  };
-
-  const handleRemoveMember = (memberId: string) => {
-    setValue(
-      "groupMember",
-      getValue("groupMember").filter((mem) => mem.id !== memberId),
-    );
-    trigger("groupMember");
-  };
-
   return (
-    <div className="md:p-8 rounded-2xl md:border md:border-secondary/30 md:bg-secondary/5 w-full flex flex-col gap-6 mb-10">
+    <div className="md:p-8 rounded-2xl md:border md:border-secondary/30 md:bg-secondary/5 w-full flex flex-col gap-6">
       <form
         id="create"
         onSubmit={handleSubmit(onSubmit)}
@@ -156,7 +112,7 @@ export default function CreateMode() {
 
         <label
           htmlFor="oneDayTrip"
-          className="flex items-center justify-between p-4 rounded-lg border border-secondary/30 bg-secondary/5"
+          className="flex items-center justify-between p-4 rounded-lg border border-secondary/30 bg-secondary/5 cursor-pointer"
         >
           <div className="flex flex-col gap-1">
             <p className="text-sm md:text-base font-semibold">Same-day trip?</p>
@@ -186,7 +142,9 @@ export default function CreateMode() {
                 <button
                   type="button"
                   id="date-picker-range"
-                  aria-invalid={errors?.startDate ? "true" : "false"}
+                  aria-invalid={
+                    errors?.startDate && isSubmitted ? "true" : "false"
+                  }
                   className="flex items-center justify-start font-normal rounded-lg! h-12 border border-secondary/30 bg-background w-full cursor-pointer aria-invalid:border-destructive aria-invalid:ring-0 aria-invalid:focus-within:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 aria-invalid:transition-all"
                 >
                   <div className="px-4">
@@ -241,7 +199,7 @@ export default function CreateMode() {
             </PopoverContent>
           </Popover>
 
-          {errors?.startDate && (
+          {errors?.startDate && isSubmitted && (
             <small className="text-red-300 capitalize">
               {errors.startDate.message}
             </small>
@@ -267,71 +225,40 @@ export default function CreateMode() {
 
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            {getValue("groupMember")?.map((member, key) => (
-              <Input
-                key={key}
-                type="text"
-                placeholder="Budi"
-                value={member.name || ""}
-                className="h-12 rounded-lg"
-                aria-invalid={!member.name && isSubmitted ? "true" : "false"}
-                onChange={(e) =>
-                  handleMemberValueChange({
-                    id: member.id,
-                    name: e.target.value,
-                  })
-                }
-                leftIcon={Contact}
-                rightIcon={getValue("groupMember").length > 1 ? X : undefined}
-                customRightIcon="size-4"
-                onRightIconClick={() => handleRemoveMember(member.id)}
-              />
-            ))}
+            <Input
+              type="text"
+              placeholder="No participant yet"
+              value={
+                getValue("participants")
+                  ?.filter((member) => member?.name)
+                  ?.map((member) => member?.name)
+                  ?.join(", ") || ""
+              }
+              className="h-12 rounded-lg"
+              aria-invalid={
+                errors?.participants && isSubmitted ? "true" : "false"
+              }
+              leftIcon={Contact}
+              readOnly
+            />
 
-            {errors?.groupMember && (
+            {errors?.participants && isSubmitted && (
               <small className="text-red-300 capitalize">
-                {
-                  (Array.isArray(errors?.groupMember)
-                    ? errors.groupMember.filter((item) => item)
-                    : errors?.groupMember)[0]?.name?.message
-                }
+                {Array.isArray(errors?.participants)
+                  ? errors.participants.filter((item) => item)[0]?.name?.message
+                  : errors?.participants?.message}
               </small>
             )}
           </div>
 
-          <Drawer>
-            <DrawerTrigger
-              render={
-                <button
-                  className="bg-secondary/5 border border-dashed border-secondary/30 p-3 rounded-lg flex items-center justify-center gap-2 opacity-70 cursor-pointer hover:bg-secondary/10 duration-200"
-                >
-                  <HugeiconsIcon
-                    icon={Edit}
-                    className="size-5"
-                    strokeWidth={2}
-                  />
-                  <p className="font-semibold text-sm leading-none">
-                    Edit participant
-                  </p>
-                </button>
-              }
-            >
-              Open
-            </DrawerTrigger>
-            <DrawerContent>
-              <DrawerHeader>
-                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                <DrawerDescription>
-                  This action cannot be undone.
-                </DrawerDescription>
-              </DrawerHeader>
-              <div className="p-4">{/* Content here */}</div>
-              <DrawerFooter>
-                <button>Submit</button>
-                <DrawerClose render={<button />}>Cancel</DrawerClose>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer>
+          <ParticipantDrawer
+            participants={getValue("participants")}
+            setParticipant={(newList) => {
+              setValue("participants", newList);
+              trigger("participants");
+            }}
+            isSubmitted={isSubmitted}
+          />
         </div>
       </form>
 

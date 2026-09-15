@@ -60,13 +60,13 @@ export default function GuestModeView() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,768px)_1fr] duration-700 delay-200">
       <div className="hidden lg:flex items-end justify-end p-3 min-w-20 w-full h-16" />
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1536px)_1fr] border-0 lg:border-x-2 border-dashed border-secondary/10 h-16" />
+      <div className="hidden lg:grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1536px)_1fr] border-0 lg:border-x-2 border-dashed border-secondary/10 h-16" />
       <div className="hidden lg:block min-w-20 h-16" />
 
       <hr className="border-0 lg:border-t-2 border-dashed border-secondary/10 col-span-1 lg:col-span-3" />
       <div className="hidden lg:flex items-end justify-end p-3 min-w-20 w-full" />
-      <div className="container relative flex flex-col min-h-[calc(100dvh-132px)] md:justify-between p-5 sm:p-8 lg:p-12 lg:pt-10 gap-8 md:gap-40 border-0! lg:border-x-2!">
-        <div className="flex flex-col justify-center gap-4 md:gap-6 pb-1.25 w-fit">
+      <div className="container relative flex flex-col h-fit md:min-h-[calc(100dvh-132px)] md:justify-between px-4.5 py-5 sm:p-8 lg:p-12 lg:pt-10 gap-8 md:gap-0 border-0! lg:border-x-2!">
+        <div className="flex flex-col justify-center gap-6 pb-1.25 w-fit">
           {mode === "none" ? (
             <WebLogo />
           ) : (
@@ -136,7 +136,7 @@ export default function GuestModeView() {
 
       <hr className="border-0 lg:border-t-2 border-dashed border-secondary/10 col-span-1 lg:col-span-3" />
       <div className="hidden lg:flex items-end justify-end p-3 min-w-20 w-full h-16" />
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1536px)_1fr] border-0 lg:border-x-2 border-dashed border-secondary/10 h-16" />
+      <div className="hidden lg:grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1536px)_1fr] border-0 lg:border-x-2 border-dashed border-secondary/10 h-16" />
       <div className="hidden lg:block min-w-20 h-16" />
     </div>
   );
